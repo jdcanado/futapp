@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "csb-4kk6prr6w",
+  "name": "futapp",
   "builds": [
     {
       "src": "package.json",
@@ -25,5 +25,5 @@
       "dest": "/index.html"
     }
   ],
-  "alias": "confiatruckparts.now.sh"
+  "alias": "futapp.now.sh"
 }
