@@ -16,13 +16,16 @@ export default {
     return {
       items: [
         {
-          src: require("@/src/assets/rec_banner.jpg")
+          src:
+            "https://rawcdn.githack.com/jdcanado/futapp/773ed7c50f36685a80b4ddf267dde25cb99626d7/src/assets/rec_banner.jpg"
         },
         {
-          src: require("@/assets/rec_atletas1.jpg")
+          src:
+            "https://rawcdn.githack.com/jdcanado/futapp/773ed7c50f36685a80b4ddf267dde25cb99626d7/src/assets/rec_atletas1.jpg"
         },
         {
-          src: require("@/assets/rec_atletas2.jpg")
+          src:
+            "https://rawcdn.githack.com/jdcanado/futapp/773ed7c50f36685a80b4ddf267dde25cb99626d7/src/assets/rec_atletas2.jpg"
         }
       ]
     };
