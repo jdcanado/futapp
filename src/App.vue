@@ -39,7 +39,7 @@
         <v-toolbar-side-icon @click.stop="drawer = !drawer;">
           <v-icon v-if="drawer">close</v-icon>
         </v-toolbar-side-icon>
-        <v-toolbar-title>Confia Truck Parts</v-toolbar-title>
+        <v-toolbar-title>FutApp</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
           <v-btn @click="$vuetify.goTo('#home');" flat>Home</v-btn>

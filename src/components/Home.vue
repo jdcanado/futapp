@@ -3,11 +3,7 @@
     <v-layout id="home" row wrap>
       <v-flex xs12>
         <v-carousel hide-delimiters hide-controls height="400">
-          <v-carousel-item
-            v-for="(item, i) in items"
-            :key="i"
-            :src="item.src"
-          ></v-carousel-item>
+          <v-carousel-item v-for="(item, i) in items" :key="i" :src="item.src"></v-carousel-item>
         </v-carousel>
       </v-flex>
     </v-layout>
@@ -20,16 +16,13 @@ export default {
     return {
       items: [
         {
-          src: "http://wowslider.net/local-sliders/demo-5/data1/images/25h.jpg"
+          src: require("@/src/assets/rec_banner.jpg")
         },
         {
-          src: "http://wowslider.net/local-sliders/demo-5/data1/images/83h.jpg"
+          src: require("@/assets/rec_atletas1.jpg")
         },
         {
-          src: "http://wowslider.net/local-sliders/demo-5/data1/images/88h.jpg"
-        },
-        {
-          src: "http://wowslider.net/local-sliders/demo-5/data1/images/114h.jpg"
+          src: require("@/assets/rec_atletas2.jpg")
         }
       ]
     };
