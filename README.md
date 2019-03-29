@@ -1,2 +1,1 @@
-# futapp
-Created with CodeSandbox
+# comandapp_vue_vuetify_mongodb
