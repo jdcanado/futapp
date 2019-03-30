@@ -18,14 +18,26 @@ class AuthService extends EventEmitter {
   profile = null;
   tokenExpiry = null;
 
-  // Starts the user login flow
   login(customState) {
     webAuth.authorize({
       appState: customState
     });
   }
 
-  // Handles the callback request from Auth0
+  logOut() {
+    localStorage.removeItem(localStorageKey);
+
+    this.idToken = null;
+    this.tokenExpiry = null;
+    this.profile = null;
+
+    webAuth.logout({
+      returnTo: `${window.location.origin}`
+    });
+
+    this.emit(loginEvent, { loggedIn: false });
+  }
+
   handleAuthentication() {
     return new Promise((resolve, reject) => {
       webAuth.parseHash((err, authResult) => {
@@ -39,11 +51,37 @@ class AuthService extends EventEmitter {
     });
   }
 
+  isAuthenticated() {
+    return (
+      Date.now() < this.tokenExpiry &&
+      localStorage.getItem(localStorageKey) === "true"
+    );
+  }
+
+  isIdTokenValid() {
+    return this.idToken && this.tokenExpiry && Date.now() < this.tokenExpiry;
+  }
+
+  getIdToken() {
+    return new Promise((resolve, reject) => {
+      if (this.isIdTokenValid()) {
+        resolve(this.idToken);
+      } else if (this.isAuthenticated()) {
+        this.renewTokens().then(authResult => {
+          resolve(authResult.idToken);
+        }, reject);
+      } else {
+        resolve();
+      }
+    });
+  }
+
   localLogin(authResult) {
     this.idToken = authResult.idToken;
     this.profile = authResult.idTokenPayload;
 
-    // Convert the JWT expiry time from seconds to milliseconds
+    // Convert the expiry time from seconds to milliseconds,
+    // required by the Date constructor
     this.tokenExpiry = new Date(this.profile.exp * 1000);
 
     localStorage.setItem(localStorageKey, "true");
@@ -71,27 +109,10 @@ class AuthService extends EventEmitter {
       });
     });
   }
-
-  logOut() {
-    localStorage.removeItem(localStorageKey);
-
-    this.idToken = null;
-    this.tokenExpiry = null;
-    this.profile = null;
-
-    webAuth.logout({
-      returnTo: window.location.origin
-    });
-
-    this.emit(loginEvent, { loggedIn: false });
-  }
-
-  isAuthenticated() {
-    return (
-      Date.now() < this.tokenExpiry &&
-      localStorage.getItem(localStorageKey) === "true"
-    );
-  }
 }
 
-export default new AuthService();
+const service = new AuthService();
+
+service.setMaxListeners(5);
+
+export default service;

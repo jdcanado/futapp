@@ -17,13 +17,13 @@
 
           <v-list-tile v-if="!isAuthenticated" @click.prevent="login();drawer = false;">
             <v-list-tile-action>
-              <v-icon>home</v-icon>
+              <v-icon left>lock</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>ENTRAR</v-list-tile-content>
           </v-list-tile>
           <v-list-tile v-if="isAuthenticated" @click.prevent="logout();drawer = false;">
             <v-list-tile-action>
-              <v-icon>contact_mail</v-icon>
+              <v-icon left>lock_open</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>SAIR</v-list-tile-content>
           </v-list-tile>
@@ -37,10 +37,10 @@
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
           <v-btn v-if="!isAuthenticated" @click.prevent="login" flat>
-            <v-icon>home</v-icon>Entrar
+            <v-icon left>lock</v-icon>Entrar
           </v-btn>
           <v-btn v-if="isAuthenticated" @click.prevent="logout" flat>
-            <v-icon>contact_mail</v-icon>Sair
+            <v-icon left>lock_open</v-icon>Sair
           </v-btn>
         </v-toolbar-items>
       </v-toolbar>
@@ -99,7 +99,45 @@
 
 <script>
 import Home from "./components/Home";
+const {
+  Stitch,
+  RemoteMongoClient,
+  UserPasswordCredential
+} = require("mongodb-stitch-browser-sdk");
 
+const client = Stitch.initializeDefaultAppClient("futapp-ziyzg");
+const db = client
+  .getServiceClient(RemoteMongoClient.factory, "jdc-futapp-mongodb-atlas")
+  .db("futapp_db");
+const credential = new UserPasswordCredential(
+  "jdcanado@gmail.com",
+  "Nir@14142135"
+);
+
+client.auth
+  .loginWithCredential(credential)
+  .then(user =>
+    db
+      .collection("equipe")
+      .updateOne(
+        { owner_id: client.auth.user.id },
+        { $set: { number: 42 } },
+        { upsert: true }
+      )
+  )
+  .then(() =>
+    db
+      .collection("equipe")
+      .find({ owner_id: client.auth.user.id }, { limit: 100 })
+      .asArray()
+  )
+  .then(docs => {
+    console.log("Found docs", docs);
+    console.log("[MongoDB Stitch] Connected to Stitch");
+  })
+  .catch(err => {
+    console.error(err);
+  });
 export default {
   name: "App",
   components: {

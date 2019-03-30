@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <p>Loading...</p>
+    <p>Loading...</p>    
   </div>
 </template>
 
@@ -10,7 +10,7 @@
 export default {
   methods: {
     handleLoginEvent(data) {
-      this.$router.push(data.state.target || "/");
+      this.$router.push(data.state.target || "/index");
     }
   },
   created() {

@@ -1,6 +1,6 @@
 <template>
   <div app>
-    <v-container id="sobre" grid-list-md text-xs-center fill-height>
+    <v-container id="index" grid-list-md text-xs-center fill-height>
       <v-layout row wrap>
         <v-flex xs12>
           <v-card>
@@ -58,6 +58,6 @@ export default {
         "Lorem ipsum dolor sit amet, brute iriure accusata ne mea. Eos suavitate referrentur ad, te duo agam libris qualisque, utroque quaestio accommodare no qui. Et percipit laboramus usu, no invidunt verterem nominati mel. Dolorem ancillae an mei, ut putant invenire splendide mel, ea nec propriae adipisci. Ignota salutandi accusamus in sed, et per malis fuisset, qui id ludus appareat."
     };
   },
-  name: "Sobre"
+  name: "Index"
 };
 </script>
