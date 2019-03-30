@@ -2,9 +2,10 @@
   <div app>
     <v-layout id="home" row wrap>
       <v-flex xs12>
-        <v-carousel hide-delimiters hide-controls height="400">
-          <v-carousel-item v-for="(item, i) in items" :key="i" :src="item.src"></v-carousel-item>
-        </v-carousel>
+        <v-img
+          src="https://rawcdn.githack.com/jdcanado/futapp/773ed7c50f36685a80b4ddf267dde25cb99626d7/src/assets/rec_atletas1.jpg"
+          aspect-ratio="2.5"
+        />
       </v-flex>
     </v-layout>
   </div>
@@ -17,16 +18,24 @@ export default {
       items: [
         {
           src:
-            "https://rawcdn.githack.com/jdcanado/futapp/773ed7c50f36685a80b4ddf267dde25cb99626d7/src/assets/rec_banner.jpg"
-        },
-        {
-          src:
-            "https://rawcdn.githack.com/jdcanado/futapp/773ed7c50f36685a80b4ddf267dde25cb99626d7/src/assets/rec_atletas1.jpg"
-        },
-        {
-          src:
-            "https://rawcdn.githack.com/jdcanado/futapp/773ed7c50f36685a80b4ddf267dde25cb99626d7/src/assets/rec_atletas2.jpg"
-        }
+            "https://rawcdn.githack.com/jdcanado/futapp/dc0a5010f4671441dfdf0815ffa102448002e8c8/src/assets/rec_atletas4.jpg"
+        } // },
+        // {
+        //   src:
+        //     "https://rawcdn.githack.com/jdcanado/futapp/773ed7c50f36685a80b4ddf267dde25cb99626d7/src/assets/rec_atletas1.jpg"
+        // } //,
+        // {
+        //   src:
+        //     "https://rawcdn.githack.com/jdcanado/futapp/773ed7c50f36685a80b4ddf267dde25cb99626d7/src/assets/rec_atletas2.jpg"
+        // },
+        //  {
+        //    src:
+        //      "https://rawcdn.githack.com/jdcanado/futapp/dc0a5010f4671441dfdf0815ffa102448002e8c8/src/assets/rec_atletas3.jpg"
+        //  },
+        //  {
+        //    src:
+        //      "https://rawcdn.githack.com/jdcanado/futapp/dc0a5010f4671441dfdf0815ffa102448002e8c8/src/assets/rec_atletas4.jpg"
+        //  }
       ]
     };
   },

@@ -3,35 +3,29 @@
     <v-app id="inspire">
       <v-navigation-drawer clipped fixed v-model="drawer" app>
         <v-list dense>
-          <v-list-tile @click="drawer = false;$vuetify.goTo('#home');">
+          <v-list-tile v-if="isAuthenticated" avatar>
+            <v-list-tile-avatar>
+              <img :src="profile.picture">
+            </v-list-tile-avatar>
+
+            <v-list-tile-content>
+              <v-list-tile-title>{{profile.name}}{{ JSON.stringify(profile, null, 2) }}</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
+          <v-divider v-if="isAuthenticated"/>
+
+          <v-list-tile v-if="!isAuthenticated" @click.prevent="login();drawer = false;">
             <v-list-tile-action>
               <v-icon>home</v-icon>
             </v-list-tile-action>
-            <v-list-tile-content>HOME</v-list-tile-content>
+            <v-list-tile-content>ENTRAR</v-list-tile-content>
           </v-list-tile>
-          <v-list-tile @click="drawer = false;$vuetify.goTo('#sobre');">
-            <v-list-tile-action>
-              <v-icon>touch_app</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>SOBRE</v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile @click="drawer = false;$vuetify.goTo('#produtos');">
-            <v-list-tile-action>
-              <v-icon>category</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>PRODUTOS</v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile @click="drawer = false;$vuetify.goTo('#portfolio');">
-            <v-list-tile-action>
-              <v-icon>view_list</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>PORTFÓLIO</v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile @click="drawer = false;$vuetify.goTo('#faleConosco');">
+          <v-list-tile v-if="isAuthenticated" @click.prevent="logout();drawer = false;">
             <v-list-tile-action>
               <v-icon>contact_mail</v-icon>
             </v-list-tile-action>
-            <v-list-tile-content>FALE CONOSCO</v-list-tile-content>
+            <v-list-tile-content>SAIR</v-list-tile-content>
           </v-list-tile>
         </v-list>
       </v-navigation-drawer>
@@ -42,19 +36,16 @@
         <v-toolbar-title>FutApp</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
-          <v-btn @click="$vuetify.goTo('#home');" flat>Home</v-btn>
-          <v-btn @click="$vuetify.goTo('#sobre');" flat>Sobre</v-btn>
-          <v-btn @click="$vuetify.goTo('#produtos');" flat>Produtos</v-btn>
-          <v-btn @click="$vuetify.goTo('#portfolio');" flat>Portfólio</v-btn>
-          <v-btn @click="$vuetify.goTo('#faleConosco');" flat>Fale Conosco</v-btn>
+          <v-btn v-if="!isAuthenticated" @click.prevent="login" flat>
+            <v-icon>home</v-icon>Entrar
+          </v-btn>
+          <v-btn v-if="isAuthenticated" @click.prevent="logout" flat>
+            <v-icon>contact_mail</v-icon>Sair
+          </v-btn>
         </v-toolbar-items>
       </v-toolbar>
       <v-content>
-        <Home/>
-        <Sobre/>
-        <Produtos/>
-        <Portfolio/>
-        <Contato/>
+        <router-view></router-view>
       </v-content>
       <v-footer class="elevation-12" app>
         <span style="margin-left: 20px">JDCanado&copy; 2019</span>
@@ -108,27 +99,39 @@
 
 <script>
 import Home from "./components/Home";
-import Sobre from "./components/Sobre";
-import Produtos from "./components/Produtos";
-import Portfolio from "./components/Portfolio";
-import Contato from "./components/Contato";
 
 export default {
   name: "App",
   components: {
-    Home,
-    Sobre,
-    Produtos,
-    Portfolio,
-    Contato
+    Home
   },
   data: () => ({
     drawer: false,
     pagina: "Home",
-    dialog: false
+    dialog: false,
+    isAuthenticated: false
   }),
   props: {
     source: String
+  },
+  async created() {
+    try {
+      await this.$auth.renewTokens();
+    } catch (e) {
+      console.log(e);
+    }
+  },
+  methods: {
+    login() {
+      this.$auth.login();
+    },
+    logout() {
+      this.$auth.logOut();
+    },
+    handleLoginEvent(data) {
+      this.isAuthenticated = data.loggedIn;
+      this.profile = data.profile;
+    }
   }
 };
 </script>

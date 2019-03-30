@@ -9,7 +9,9 @@
     "now-build": "npm run build"
   },
   "dependencies": {
+    "auth0-js": "9.10.1",
     "vue": "2.6.10",
+    "vue-router": "3.0.2",
     "vuetify": "1.5.8"
   },
   "devDependencies": {
