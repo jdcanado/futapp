@@ -9,7 +9,7 @@
             </v-list-tile-avatar>
 
             <v-list-tile-content>
-              <v-list-tile-title>{{profile.name}}{{ JSON.stringify(profile, null, 2) }}</v-list-tile-title>
+              <v-list-tile-title>{{profile.nickname}}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
 

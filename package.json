@@ -9,6 +9,7 @@
     "now-build": "npm run build"
   },
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "7.4.0",
     "auth0-js": "9.10.1",
     "vue": "2.6.10",
     "vue-router": "3.0.2",
