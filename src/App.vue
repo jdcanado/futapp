@@ -27,6 +27,12 @@
             </v-list-tile-action>
             <v-list-tile-content>SAIR</v-list-tile-content>
           </v-list-tile>
+          <v-list-tile v-if="isAuthenticated" to="/cadastro">
+            <v-list-tile-action>
+              <v-icon left>check</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>CADASTRO</v-list-tile-content>
+          </v-list-tile>
         </v-list>
       </v-navigation-drawer>
       <v-toolbar app fixed clipped-left>
@@ -99,45 +105,7 @@
 
 <script>
 import Home from "./components/Home";
-const {
-  Stitch,
-  RemoteMongoClient,
-  UserPasswordCredential
-} = require("mongodb-stitch-browser-sdk");
 
-const client = Stitch.initializeDefaultAppClient("futapp-ziyzg");
-const db = client
-  .getServiceClient(RemoteMongoClient.factory, "jdc-futapp-mongodb-atlas")
-  .db("futapp_db");
-const credential = new UserPasswordCredential(
-  "jdcanado@gmail.com",
-  "Nir@14142135"
-);
-
-client.auth
-  .loginWithCredential(credential)
-  .then(user =>
-    db
-      .collection("equipe")
-      .updateOne(
-        { owner_id: client.auth.user.id },
-        { $set: { number: 42 } },
-        { upsert: true }
-      )
-  )
-  .then(() =>
-    db
-      .collection("equipe")
-      .find({ owner_id: client.auth.user.id }, { limit: 100 })
-      .asArray()
-  )
-  .then(docs => {
-    console.log("Found docs", docs);
-    console.log("[MongoDB Stitch] Connected to Stitch");
-  })
-  .catch(err => {
-    console.error(err);
-  });
 export default {
   name: "App",
   components: {

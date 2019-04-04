@@ -6,6 +6,7 @@ import Callback from "./components/Callback";
 import Home from "./components/Home";
 import Index from "./components/Index";
 import auth from "./auth/authService";
+import Cadastro from "./components/Cadastro";
 
 Vue.use(Router);
 
@@ -24,6 +25,11 @@ const routes = [
     path: "/index",
     name: "index",
     component: Index
+  },
+  {
+    path: "/cadastro",
+    name: "cadastro",
+    component: Cadastro
   }
 ];
 
