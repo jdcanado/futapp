@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "7.4.0",
-    "auth0-js": "9.10.1",
+    "auth0-js": "9.13.2",
     "mongodb-stitch-browser-sdk": "4.3.2",
     "vue": "2.6.10",
     "vue-router": "3.0.2",
